@@ -1,9 +1,10 @@
-const socket = io();
-
 const form = document.getElementById('form');
 const input = document.getElementById('input');
 const messages = document.getElementById('messages');
+
+const socket = io();
 let userName = prompt('Как вас зовут?');
+let idRoom = prompt('Введите название комнаты, к которой нужно подключиться')
 
 form.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -11,7 +12,7 @@ form.addEventListener('submit', function(e) {
         userName = 'Аноним';
     } else {
         if (input.value) {
-            const obj = {Message: input.value, UserName: userName};
+            const obj = {Message: input.value, UserName: userName, IdRoom: idRoom};
             socket.emit('chat message', obj);
             input.value = '';
         }

@@ -7,16 +7,16 @@ const io = new Server(server);
 
 app.use(Express.static("public"));
 
-
 io.on('connection', (socket) => {
     console.log('Пользователь подключен!');
 
-    socket.on('disconnect', (msg) => {
+    socket.on('disconnect', () => {
         console.log('Пользователь отключен!');
     });
 
     socket.on('chat message', (obj) => {
-        io.emit('chat message', obj.Message, obj.UserName);
+        socket.join(obj.IdRoom);
+        io.to(obj.IdRoom).emit('chat message', obj.Message, obj.UserName);
     });
 });
 
